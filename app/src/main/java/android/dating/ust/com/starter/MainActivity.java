@@ -2,6 +2,7 @@ package android.dating.ust.com.starter;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +21,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Log.i(TAG, "mCreate " + ++mCreate);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
@@ -29,33 +29,44 @@ public class MainActivity extends Activity {
                     .commit();
         }
 
-        TextView tvCreate = (TextView) findViewById(R.id.tvCreate);
-        tvCreate.setText(mCreate);
+        ((TextView) findViewById(R.id.tvCreate)).setText(mCreate.toString());
+        ((TextView) findViewById(R.id.tvStart)).setText(mStart.toString());
+        ((TextView) findViewById(R.id.tvRestart)).setText(mRestart.toString());
+        ((TextView) findViewById(R.id.tvResume)).setText(mResume.toString());
+
+        // Has previous state been saved?
+        if (savedInstanceState != null) {
+            // TODO:
+            // Restore value of counters from saved state
+            // Only need 4 lines of code, one for every count variable
+
+        }
+
+        // Emit LogCat message
+        Log.i(TAG, "Entered the onCreate() method");
+
+        // TODO:
+        // Update the appropriate count variable
+        // Update the user interface via the displayCounts() method
+
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         Log.i(TAG, "mRestart " + ++mRestart);
-        TextView tvRestart = (TextView) findViewById(R.id.tvRestart);
-        tvRestart.setText(mRestart);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "mStart " + ++mStart);
-        TextView tvStart = (TextView) findViewById(R.id.tvStart);
-        tvStart.setText(mStart);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "mResume " + ++mResume);
-        TextView tvResume = (TextView) findViewById(R.id.tvResume);
-        tvResume.setText(mResume);
     }
 
     @Override
@@ -92,6 +103,14 @@ public class MainActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            rootView.findViewById(R.id.btnSearch).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), ResultActivity.class));
+                }
+            });
+
             return rootView;
         }
     }

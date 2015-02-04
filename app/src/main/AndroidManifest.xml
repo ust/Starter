@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StupidActivity"
+            android:name=".ResultActivity"
             android:label="@string/title_activity_stupid" >
         </activity>
     </application>
