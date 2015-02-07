@@ -16,12 +16,18 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
     public static final String TAG = "lab";
+    public static final String CREATE = "mCreate";
+    public static final String START = "mStart";
+    public static final String RESTART = "mRestart";
+    public static final String RESUME = "mResume";
     private Integer mCreate = 0, mRestart = 0, mStart = 0, mResume = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Log.i(TAG, "mCreate " + ++mCreate);
+
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
@@ -29,44 +35,52 @@ public class MainActivity extends Activity {
                     .commit();
         }
 
-        ((TextView) findViewById(R.id.tvCreate)).setText(mCreate.toString());
-        ((TextView) findViewById(R.id.tvStart)).setText(mStart.toString());
-        ((TextView) findViewById(R.id.tvRestart)).setText(mRestart.toString());
-        ((TextView) findViewById(R.id.tvResume)).setText(mResume.toString());
-
         // Has previous state been saved?
         if (savedInstanceState != null) {
-            // TODO:
             // Restore value of counters from saved state
             // Only need 4 lines of code, one for every count variable
-
+            mResume = savedInstanceState.getInt(CREATE);
+            mStart = savedInstanceState.getInt(START);
+            mRestart = savedInstanceState.getInt(RESTART);
+            mResume = savedInstanceState.getInt(RESUME);
         }
 
         // Emit LogCat message
         Log.i(TAG, "Entered the onCreate() method");
 
-        // TODO:
         // Update the appropriate count variable
         // Update the user interface via the displayCounts() method
-
+        displayCounters();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         Log.i(TAG, "mRestart " + ++mRestart);
+        displayCounters();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "mStart " + ++mStart);
+        displayCounters();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "mResume " + ++mResume);
+        displayCounters();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CREATE, mCreate);
+        outState.putInt(START, mStart);
+        outState.putInt(RESTART, mRestart);
+        outState.putInt(RESUME, mResume);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -113,5 +127,12 @@ public class MainActivity extends Activity {
 
             return rootView;
         }
+    }
+
+    private void displayCounters() {
+        ((TextView) findViewById(R.id.tvCreate)).setText(mCreate.toString());
+        ((TextView) findViewById(R.id.tvStart)).setText(mStart.toString());
+        ((TextView) findViewById(R.id.tvRestart)).setText(mRestart.toString());
+        ((TextView) findViewById(R.id.tvResume)).setText(mResume.toString());
     }
 }
