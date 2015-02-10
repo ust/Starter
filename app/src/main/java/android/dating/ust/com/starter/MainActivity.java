@@ -1,9 +1,10 @@
 package android.dating.ust.com.starter;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ListActivity {
 
     public static final String TAG = "lab";
     public static final String CREATE = "mCreate";
@@ -45,6 +46,9 @@ public class MainActivity extends Activity {
             mResume = savedInstanceState.getInt(RESUME);
         }
 
+        getListView().setFooterDividersEnabled(true);
+        setListAdapter(new SearchAdapter());
+
         // Emit LogCat message
         Log.i(TAG, "Entered the onCreate() method");
 
@@ -75,7 +79,7 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt(CREATE, mCreate);
         outState.putInt(START, mStart);
         outState.putInt(RESTART, mRestart);
