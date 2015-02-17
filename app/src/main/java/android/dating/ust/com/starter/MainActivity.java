@@ -26,7 +26,6 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Log.i(TAG, "mCreate " + ++mCreate);
 
         setContentView(R.layout.activity_main);
@@ -36,10 +35,7 @@ public class MainActivity extends ListActivity {
                     .commit();
         }
 
-        // Has previous state been saved?
         if (savedInstanceState != null) {
-            // Restore value of counters from saved state
-            // Only need 4 lines of code, one for every count variable
             mResume = savedInstanceState.getInt(CREATE);
             mStart = savedInstanceState.getInt(START);
             mRestart = savedInstanceState.getInt(RESTART);
@@ -48,13 +44,33 @@ public class MainActivity extends ListActivity {
 
         getListView().setFooterDividersEnabled(true);
         setListAdapter(new SearchAdapter());
+        // Inflate footerView for footer_view.xml file
+        TextView footer = (TextView) getLayoutInflater().inflate(R.layout.search_item, this.getListView());
+        // Add footerView to ListView
+        this.getListView().addFooterView(footer);
+        footer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "Entered footerView.OnClickListener.onClick()");
+                //TODO - Implement OnClick().
+                // launch add new activity
+            }
+        });
 
-        // Emit LogCat message
+        // TODO - Attach the adapter to this ListActivity's ListView
+
         Log.i(TAG, "Entered the onCreate() method");
-
-        // Update the appropriate count variable
-        // Update the user interface via the displayCounts() method
         displayCounters();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "Entered onActivityResult()");
+
+        // TODO - Check result code and request code
+        // if user submitted a new ToDoItem
+        // Create a new ToDoItem from the data Intent
+        // and then add it to the adapter
     }
 
     @Override
