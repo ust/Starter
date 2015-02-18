@@ -141,7 +141,7 @@ public class MainActivity extends ListActivity {
             rootView.findViewById(R.id.btnSearch).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), ResultActivity.class));
+                    startActivity(new Intent(getActivity(), AddNewActivity.class));
                 }
             });
 
