@@ -30,9 +30,7 @@ public class MainActivity extends ListActivity {
 
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+//            getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         }
 
         if (savedInstanceState != null) {
@@ -52,8 +50,8 @@ public class MainActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "Entered footerView.OnClickListener.onClick()");
-                //TODO - Implement OnClick().
                 // launch add new activity
+                startActivity(new Intent(MainActivity.this, AddNewActivity.class));
             }
         });
 
