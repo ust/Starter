@@ -29,6 +29,7 @@ public class MainActivity extends ListActivity {
         Log.i(TAG, "mCreate " + ++mCreate);
 
         setContentView(R.layout.activity_main);
+        // detailMessage = {java.lang.String@3589}"Your content must have a ListView whose id attribute is 'android.R.id.list'"
         if (savedInstanceState == null) {
 //            getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         }
@@ -43,7 +44,8 @@ public class MainActivity extends ListActivity {
         getListView().setFooterDividersEnabled(true);
         setListAdapter(new SearchAdapter());
         // Inflate footerView for footer_view.xml file
-        TextView footer = (TextView) getLayoutInflater().inflate(R.layout.search_item, this.getListView());
+        TextView footer = (TextView) getLayoutInflater().inflate(R.layout.new_search_item, null);
+        // detailMessage = {java.lang.String@3592}"addView(View, LayoutParams) is not supported in AdapterView"
         // Add footerView to ListView
         this.getListView().addFooterView(footer);
         footer.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +60,6 @@ public class MainActivity extends ListActivity {
         // TODO - Attach the adapter to this ListActivity's ListView
 
         Log.i(TAG, "Entered the onCreate() method");
-        displayCounters();
     }
 
     @Override
@@ -75,21 +76,18 @@ public class MainActivity extends ListActivity {
     protected void onRestart() {
         super.onRestart();
         Log.i(TAG, "mRestart " + ++mRestart);
-        displayCounters();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "mStart " + ++mStart);
-        displayCounters();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "mResume " + ++mResume);
-        displayCounters();
     }
 
     @Override
@@ -147,10 +145,4 @@ public class MainActivity extends ListActivity {
         }
     }
 
-    private void displayCounters() {
-        ((TextView) findViewById(R.id.tvCreate)).setText(mCreate.toString());
-        ((TextView) findViewById(R.id.tvStart)).setText(mStart.toString());
-        ((TextView) findViewById(R.id.tvRestart)).setText(mRestart.toString());
-        ((TextView) findViewById(R.id.tvResume)).setText(mResume.toString());
-    }
 }
