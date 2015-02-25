@@ -6,12 +6,28 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 
 public class AddNewActivity extends Activity {
 
     public static final String TAG = "lab";
+
+    public enum ResultType {
+        ok(1);
+
+        private int code;
+
+        ResultType(int code) {
+            this.code = code;
+        }
+
+        public static ResultType of(int code) {
+            for (ResultType r : values())
+                if (r.code == code)
+                    return r;
+            return null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

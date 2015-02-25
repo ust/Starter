@@ -34,4 +34,9 @@ public class SearchAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         return null;
     }
+
+    public void add(SearchItem searchItem) {
+        items.add(searchItem);
+        notifyDataSetChanged();
+    }
 }
