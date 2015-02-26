@@ -52,9 +52,8 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        // detailMessage = {java.lang.String@3589}"Your content must have a ListView whose id attribute is 'android.R.id.list'"
         if (savedInstanceState == null) {
-//            getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+            // getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         }
 
         if (savedInstanceState != null) {
@@ -143,11 +142,13 @@ public class MainActivity extends ListActivity {
         try (FileInputStream fis = openFileInput(FILE_NAME);
              BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
 
-            String any /*TODO*/;
-            String some;
-            while (null != (any = reader.readLine())) {
-                some = reader.readLine();
-                adapter.add(new SearchItem(/*any, some*/));
+            Integer id;
+            String name;
+            Byte age;
+            while (null != (id = Integer.parseInt(reader.readLine()))) {
+                name = reader.readLine();
+                age = Byte.parseByte(reader.readLine());
+                adapter.add(new SearchItem(id, name, age));
             }
 
         } catch (IOException e) {

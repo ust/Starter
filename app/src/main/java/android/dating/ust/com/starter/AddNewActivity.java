@@ -41,30 +41,27 @@ public class AddNewActivity extends Activity {
                 finish();
             }
         });
+
         if (savedInstanceState != null) {
         }
-        displayCounters();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "mStart ");
-        displayCounters();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         Log.i(TAG, "mRestart ");
-        displayCounters();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "mResume ");
-        displayCounters();
     }
 
     @Override
@@ -93,8 +90,4 @@ public class AddNewActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    private void displayCounters() {
     }
-
-}
