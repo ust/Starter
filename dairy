@@ -15,13 +15,14 @@
  9. Лейаут это чуть не то, что я думал раньше.
 10. Решил сам с нуля сделать лэйаут. Чёт надвигал. Всунул и даже прошло!
 11. Занялся моделью
+12. Раскидал юзерстори, двигаюсь к результату
 ------------------------------------------- TO DO --------------------------------------------------
- *  Using AddNewActivity insert new item to the main list
- *  Save items between relaunching app
  *  Save results of search
  *  Implement logic of search
  *  Differentiate skipped results from new searched
  *  Show results in the main screen
  *  Show results as the avatar pictures
 ---------------------------------------- IN PROGRESS -----------------------------------------------
+ *  Using AddNewActivity insert new item to the main list
+ *  Save items between relaunching app
 -------------------------------------------- DONE --------------------------------------------------

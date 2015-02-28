@@ -1,19 +1,24 @@
 package android.dating.ust.com.starter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 public class AddNewActivity extends Activity {
 
-    public static final String TAG = "lab";
+    public static final String TAG = "addNew";
+    private TextView tvName;
+    private TextView tvAge;
 
     public enum ResultType {
-        ok(1);
+        cancel(RESULT_CANCELED), ok(RESULT_OK);
 
         private int code;
 
@@ -35,15 +40,34 @@ public class AddNewActivity extends Activity {
         Log.i(TAG, "mCreate ");
 
         setContentView(R.layout.activity_result);
+        tvName = (TextView) findViewById(R.id.etName);
+        tvAge = (TextView) findViewById(R.id.etAge);
         findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(ResultType.ok.code, //
+                        new SearchItem(id(), name(), age()).putExtras(new Intent()));
+                finish();
+            }
+        });
+    }
 
-        if (savedInstanceState != null) {
-        }
+    private Byte age() {
+        return Byte.parseByte(tvAge.getText().toString());
+    }
+
+    private String name() {
+        return tvName.getText().toString();
+    }
+
+    private Long id() {
+        return System.currentTimeMillis();
     }
 
     @Override
@@ -65,7 +89,7 @@ public class AddNewActivity extends Activity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
@@ -90,4 +114,4 @@ public class AddNewActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-    }
+}

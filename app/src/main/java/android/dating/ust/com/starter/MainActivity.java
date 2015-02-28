@@ -56,9 +56,6 @@ public class MainActivity extends ListActivity {
             // getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         }
 
-        if (savedInstanceState != null) {
-        }
-
         getListView().setFooterDividersEnabled(true);
         // Inflate footerView for footer_view.xml file
         TextView footer = (TextView) getLayoutInflater().inflate(R.layout.new_search_item, null);
@@ -95,8 +92,9 @@ public class MainActivity extends ListActivity {
     }
 
     private void addSearchItem(Intent data) {
-        // TODO Create a new ToDoItem from the data Intent
+        // Create a new ToDoItem from the data Intent
         // and then add it to the adapter
+        adapter.add(new SearchItem(data));
     }
 
     @Override
@@ -141,16 +139,8 @@ public class MainActivity extends ListActivity {
     private void loadItems() {
         try (FileInputStream fis = openFileInput(FILE_NAME);
              BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
-
-            Integer id;
-            String name;
-            Byte age;
-            while (null != (id = Integer.parseInt(reader.readLine()))) {
-                name = reader.readLine();
-                age = Byte.parseByte(reader.readLine());
-                adapter.add(new SearchItem(id, name, age));
-            }
-
+            for (String id = reader.readLine(); id != null; id = reader.readLine())
+                adapter.add(new SearchItem(Long.parseLong(id), reader.readLine(), Byte.parseByte(reader.readLine())));
         } catch (IOException e) {
             e.printStackTrace();
         }
