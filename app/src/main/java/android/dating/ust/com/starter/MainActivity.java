@@ -1,16 +1,13 @@
 package android.dating.ust.com.starter;
 
-import android.app.Fragment;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -27,39 +24,15 @@ public class MainActivity extends ListActivity {
 
     public static final String TAG = "main_activity";
     private static final String FILE_NAME = "starter.dat";
-
-    enum RequestType {
-        add(1), edit(2);
-
-        int code;
-
-        RequestType(int code) {
-            this.code = code;
-        }
-
-        public static RequestType of(int code) {
-            for (RequestType r : values())
-                if (r.code == code)
-                    return r;
-            return null;
-        }
-    }
-
     SearchAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-//        if (savedInstanceState == null) {
-//            getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
-//        }
-
         getListView().setFooterDividersEnabled(true);
         // Inflate footerView for footer_view.xml file
         TextView footer = (TextView) getLayoutInflater().inflate(R.layout.new_search_item, getListView(), false);
-        // detailMessage = {java.lang.String@3592}"addView(View, LayoutParams) is not supported in AdapterView"
         // Add footerView to ListView
         this.getListView().addFooterView(footer);
         footer.setOnClickListener(new View.OnClickListener() {
@@ -107,16 +80,6 @@ public class MainActivity extends ListActivity {
         // Create a new ToDoItem from the data Intent
         // and then add it to the adapter
         adapter.add(SearchItem.from(data));
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -185,28 +148,22 @@ public class MainActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
+    enum RequestType {
+        add(1), edit(2);
 
-        public PlaceholderFragment() {
+        int code;
+
+        RequestType(int code) {
+            this.code = code;
         }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-            rootView.findViewById(R.id.btnSearch).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), AddNewActivity.class));
-                }
-            });
-
-            return rootView;
+        public static RequestType of(int code) {
+            for (RequestType r : values())
+                if (r.code == code)
+                    return r;
+            return null;
         }
     }
+
 
 }

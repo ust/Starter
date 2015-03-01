@@ -1,6 +1,6 @@
 package android.dating.ust.com.starter;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,33 +9,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 
-public class AddNewActivity extends Activity {
+
+public class AddNewActivity extends ListActivity {
 
     private TextView tvName;
     private TextView tvAge;
-
-    public enum ResultType {
-        cancel(RESULT_CANCELED), ok(RESULT_OK);
-
-        private int code;
-
-        ResultType(int code) {
-            this.code = code;
-        }
-
-        public static ResultType of(int code) {
-            for (ResultType r : values())
-                if (r.code == code)
-                    return r;
-            return null;
-        }
-    }
+    private UrlAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result);
+        setContentView(R.layout.search_activity);
         final SearchItem item = SearchItem.from(getIntent());
         tvName = (TextView) findViewById(R.id.etName);
         tvAge = (TextView) findViewById(R.id.etAge);
@@ -43,6 +30,12 @@ public class AddNewActivity extends Activity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        findViewById(R.id.btnSearch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
             }
         });
         findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
@@ -53,9 +46,22 @@ public class AddNewActivity extends Activity {
                 finish();
             }
         });
+        adapter = new UrlAdapter(this);
+        setListAdapter(adapter);
         if (item != null) {
             tvName.setText(item.name());
             tvAge.setText(item.age().toString());
+            adapter.addAll(item.urls());
+        }
+    }
+
+    private void search() {
+        // Search
+        // add urls to list
+        try {
+            adapter.add(new Url(new URL("http://bla.com"), new URL("http://bla.com/nothing.jpg")));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -96,5 +102,22 @@ public class AddNewActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public enum ResultType {
+        cancel(RESULT_CANCELED), ok(RESULT_OK);
+
+        private int code;
+
+        ResultType(int code) {
+            this.code = code;
+        }
+
+        public static ResultType of(int code) {
+            for (ResultType r : values())
+                if (r.code == code)
+                    return r;
+            return null;
+        }
     }
 }
