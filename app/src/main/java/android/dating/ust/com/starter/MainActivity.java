@@ -45,7 +45,7 @@ public class MainActivity extends ListActivity {
         }
     }
 
-    SearchAdapter adapter = new SearchAdapter();
+    SearchAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class MainActivity extends ListActivity {
             }
         });
         // Attach the adapter to this ListActivity's ListView
+        adapter = new SearchAdapter(getBaseContext());
         setListAdapter(adapter);
         Log.i(TAG, "Entered the onCreate() method");
     }

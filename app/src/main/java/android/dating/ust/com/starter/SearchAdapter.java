@@ -1,11 +1,14 @@
 package android.dating.ust.com.starter;
 
+import android.content.Context;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +23,11 @@ public class SearchAdapter extends BaseAdapter {
 
     private static final String TAG = "searchAdapter";
     private List<SearchItem> items = new ArrayList<>();
+    private Context context;
+
+    public SearchAdapter(Context context) {
+        this.context = context;
+    }
 
     @Override
     public int getCount() {
@@ -27,7 +35,7 @@ public class SearchAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public SearchItem getItem(int position) {
         return items.get(position);
     }
 
@@ -38,50 +46,36 @@ public class SearchAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        // TODO - Get the current ToDoItem
-        //final ToDoItem toDoItem = null;
-
-        // TODO - Inflate the View for this ToDoItem
+        // Get the current ToDoItem
+        SearchItem item = items.get(position);
+        // Inflate the View for this ToDoItem
         // from todo_item.xml
-        RelativeLayout itemLayout = null;
-
-        // TODO - Fill in specific ToDoItem data
+        ItemHolder holder;
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.search_item, parent, false);
+            holder = new ItemHolder(convertView);
+        } else holder = (ItemHolder) convertView.getTag();
+        // Fill in specific ToDoItem data
         // Remember that the data that goes in this View
         // corresponds to the user interface elements defined
         // in the layout file
-
-        // TODO - Display Title in TextView
-        final TextView titleView = null;
-
-        // TODO - Set up Status CheckBox
-        final CheckBox statusView = null;
-
-        statusView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                Log.i(TAG, "Entered onCheckedChanged()");
-
-                // TODO - set up an OnCheckedChangeListener, which
-                // is called when the user toggles the status checkbox
-
-            }
-        });
-
-        // TODO - Display Priority in a TextView
-
-        final TextView priorityView = null;
-
-        // TODO - Display Time and Date.
-        // Hint - use ToDoItem.FORMAT.format(toDoItem.getDate()) to get date and
-        // time String
-
-        final TextView dateView = null;
-
+        holder.tvName.setText(item.name());
+        holder.tvAge.setText(item.age().toString());
         // Return the View you just created
-        return itemLayout;
+        return convertView;
 
+    }
+
+    static class ItemHolder {
+        TextView tvName;
+        TextView tvAge;
+
+        public ItemHolder(View view) {
+            tvName = (TextView) view.findViewById(R.id.tvName);
+            tvAge = (TextView) view.findViewById(R.id.tvAge);
+            view.setTag(this);
+        }
     }
 
     public void add(SearchItem searchItem) {
