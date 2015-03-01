@@ -17,12 +17,12 @@
 11. Занялся моделью
 12. Раскидал юзерстори, двигаюсь к результату
 ------------------------------------------- TO DO --------------------------------------------------
- *  Save results of search
  *  Implement logic of search
  *  Differentiate skipped results from new searched
  *  Show results in the main screen
  *  Show results as the avatar pictures
 ---------------------------------------- IN PROGRESS -----------------------------------------------
- *  Save items between relaunching app
+ *  Save results of search
 -------------------------------------------- DONE --------------------------------------------------
+ *  Save items between relaunching app
  *  Using AddNewActivity insert new item to the main list

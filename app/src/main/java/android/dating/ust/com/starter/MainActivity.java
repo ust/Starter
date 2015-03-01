@@ -52,9 +52,9 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            // getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
-        }
+//        if (savedInstanceState == null) {
+//            getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+//        }
 
         getListView().setFooterDividersEnabled(true);
         // Inflate footerView for footer_view.xml file
@@ -122,7 +122,7 @@ public class MainActivity extends ListActivity {
                      fos)))) {
 
             for (int i = 0; i < getListAdapter().getCount(); i++)
-                writer.println(getListAdapter().getItem(i));
+                writer.println(((SearchItem) getListAdapter().getItem(i)).stringValue());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -45,6 +45,11 @@ public class SearchItem {
         return intent.putExtra(ID, id).putExtra(NAME, name).putExtra(AGE, age);
     }
 
+    public String stringValue() {
+        String _ = System.getProperty("line.separator");
+        return id + _ + name + _ + age;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
