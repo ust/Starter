@@ -16,13 +16,21 @@
 10. Решил сам с нуля сделать лэйаут. Чёт надвигал. Всунул и даже прошло!
 11. Занялся моделью
 12. Раскидал юзерстори, двигаюсь к результату
+---------------------------------------- IN PROGRESS -----------------------------------------------
+ *  Design search actions
+ *  Save results of search
 ------------------------------------------- TO DO --------------------------------------------------
  *  Implement logic of search
  *  Differentiate skipped results from new searched
  *  Show results in the main screen
  *  Show results as the avatar pictures
----------------------------------------- IN PROGRESS -----------------------------------------------
- *  Save results of search
+ ** [mamba] mark accounts in plain search view
+ ** [mamba,topface,badoo] notify when favorites appeared online
+ ** [topface, badoo] silent search for newcomers
+ ** Save data on cloud
+ ** [mamba,topface,badoo] mark as favorite
+ ** [mamba,topface,badoo] Login system
 -------------------------------------------- DONE --------------------------------------------------
+ *  Edit search item
  *  Save items between relaunching app
  *  Using AddNewActivity insert new item to the main list

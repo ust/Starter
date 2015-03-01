@@ -1,16 +1,15 @@
 package android.dating.ust.com.starter;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ import java.util.List;
  */
 public class SearchAdapter extends BaseAdapter {
 
-    private static final String TAG = "searchAdapter";
     private List<SearchItem> items = new ArrayList<>();
     private Context context;
 
@@ -47,7 +45,7 @@ public class SearchAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the current ToDoItem
-        SearchItem item = items.get(position);
+        final SearchItem item = items.get(position);
         // Inflate the View for this ToDoItem
         // from todo_item.xml
         ItemHolder holder;
@@ -60,6 +58,16 @@ public class SearchAdapter extends BaseAdapter {
         // Remember that the data that goes in this View
         // corresponds to the user interface elements defined
         // in the layout file
+        View.OnClickListener editor = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) context).startActivityForResult(
+                        item.putExtras(new Intent(context, AddNewActivity.class)),
+                        MainActivity.RequestType.edit.code);
+            }
+        };
+        holder.tvName.setOnClickListener(editor);
+        holder.tvAge.setOnClickListener(editor);
         holder.tvName.setText(item.name());
         holder.tvAge.setText(item.age().toString());
         // Return the View you just created
@@ -72,8 +80,8 @@ public class SearchAdapter extends BaseAdapter {
         TextView tvAge;
 
         public ItemHolder(View view) {
-            tvName = (TextView) view.findViewById(R.id.tvName);
-            tvAge = (TextView) view.findViewById(R.id.tvAge);
+            this.tvName = (TextView) view.findViewById(R.id.tvName);
+            this.tvAge = (TextView) view.findViewById(R.id.tvAge);
             view.setTag(this);
         }
     }
@@ -82,4 +90,18 @@ public class SearchAdapter extends BaseAdapter {
         items.add(searchItem);
         notifyDataSetChanged();
     }
+
+    public void set(final SearchItem item) {
+        int old = Iterables.indexOf(items, new Predicate<SearchItem>() {
+            @Override
+            public boolean apply(SearchItem input) {
+                return input.id().equals(item.id());
+            }
+        });
+        if (old != -1)
+            items.set(old, item);
+        else items.add(item);
+        notifyDataSetChanged();
+    }
+
 }

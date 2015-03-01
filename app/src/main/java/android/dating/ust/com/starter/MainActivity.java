@@ -29,9 +29,9 @@ public class MainActivity extends ListActivity {
     private static final String FILE_NAME = "starter.dat";
 
     enum RequestType {
-        addNew(1);
+        add(1), edit(2);
 
-        private int code;
+        int code;
 
         RequestType(int code) {
             this.code = code;
@@ -58,7 +58,7 @@ public class MainActivity extends ListActivity {
 
         getListView().setFooterDividersEnabled(true);
         // Inflate footerView for footer_view.xml file
-        TextView footer = (TextView) getLayoutInflater().inflate(R.layout.new_search_item, null);
+        TextView footer = (TextView) getLayoutInflater().inflate(R.layout.new_search_item, getListView(), false);
         // detailMessage = {java.lang.String@3592}"addView(View, LayoutParams) is not supported in AdapterView"
         // Add footerView to ListView
         this.getListView().addFooterView(footer);
@@ -67,11 +67,11 @@ public class MainActivity extends ListActivity {
             public void onClick(View v) {
                 Log.i(TAG, "Entered footerView.OnClickListener.onClick()");
                 // launch add new activity
-                startActivityForResult(new Intent(MainActivity.this, AddNewActivity.class), RequestType.addNew.code);
+                startActivityForResult(new Intent(MainActivity.this, AddNewActivity.class), RequestType.add.code);
             }
         });
         // Attach the adapter to this ListActivity's ListView
-        adapter = new SearchAdapter(getBaseContext());
+        adapter = new SearchAdapter(this);
         setListAdapter(adapter);
         Log.i(TAG, "Entered the onCreate() method");
     }
@@ -81,7 +81,7 @@ public class MainActivity extends ListActivity {
         Log.i(TAG, "Entered onActivityResult()");
         // Check result code and request code
         switch (RequestType.of(requestCode)) {
-            case addNew:
+            case add:
                 switch (AddNewActivity.ResultType.of(resultCode)) {
                     case ok:
                         // if user submitted a new ToDoItem
@@ -89,13 +89,24 @@ public class MainActivity extends ListActivity {
                         break;
                 }
                 break;
+            case edit:
+                switch (AddNewActivity.ResultType.of(resultCode)) {
+                    case ok:
+                        editSearchItem(data);
+                        break;
+                }
+                break;
         }
+    }
+
+    private void editSearchItem(Intent data) {
+        adapter.set(SearchItem.from(data));
     }
 
     private void addSearchItem(Intent data) {
         // Create a new ToDoItem from the data Intent
         // and then add it to the adapter
-        adapter.add(new SearchItem(data));
+        adapter.add(SearchItem.from(data));
     }
 
     @Override

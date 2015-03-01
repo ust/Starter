@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 public class AddNewActivity extends Activity {
 
-    public static final String TAG = "addNew";
     private TextView tvName;
     private TextView tvAge;
 
@@ -37,9 +35,8 @@ public class AddNewActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "mCreate ");
-
         setContentView(R.layout.activity_result);
+        final SearchItem item = SearchItem.from(getIntent());
         tvName = (TextView) findViewById(R.id.etName);
         tvAge = (TextView) findViewById(R.id.etAge);
         findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {
@@ -52,10 +49,14 @@ public class AddNewActivity extends Activity {
             @Override
             public void onClick(View v) {
                 setResult(ResultType.ok.code, //
-                        new SearchItem(id(), name(), age()).putExtras(new Intent()));
+                        new SearchItem(item != null ? item.id() : id(), name(), age()).putExtras(new Intent()));
                 finish();
             }
         });
+        if (item != null) {
+            tvName.setText(item.name());
+            tvAge.setText(item.age().toString());
+        }
     }
 
     private Byte age() {
@@ -68,24 +69,6 @@ public class AddNewActivity extends Activity {
 
     private Long id() {
         return System.currentTimeMillis();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(TAG, "mStart ");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i(TAG, "mRestart ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG, "mResume ");
     }
 
     @Override
