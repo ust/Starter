@@ -17,10 +17,10 @@
 11. Занялся моделью
 12. Раскидал юзерстори, двигаюсь к результату
 ---------------------------------------- IN PROGRESS -----------------------------------------------
- *  Design search actions
  *  Save results of search
 ------------------------------------------- TO DO --------------------------------------------------
  *  Implement logic of search
+ *  Delete items
  *  Differentiate skipped results from new searched
  *  Show results in the main screen
  *  Show results as the avatar pictures
@@ -31,6 +31,7 @@
  ** [mamba,topface,badoo] mark as favorite
  ** [mamba,topface,badoo] Login system
 -------------------------------------------- DONE --------------------------------------------------
+ *  Design search actions
  *  Edit search item
  *  Save items between relaunching app
  *  Using AddNewActivity insert new item to the main list
