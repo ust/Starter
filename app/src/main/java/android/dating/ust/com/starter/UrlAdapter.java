@@ -52,7 +52,7 @@ public class UrlAdapter extends BaseAdapter {
     }
 
     public boolean addAll(List<Url> urls) {
-        boolean added = urls.addAll(urls);
+        boolean added = this.urls.addAll(urls);
         if (added) notifyDataSetChanged();
         return added;
     }
@@ -61,6 +61,10 @@ public class UrlAdapter extends BaseAdapter {
         boolean added = urls.add(url);
         if (added) notifyDataSetChanged();
         return added;
+    }
+
+    public List<Url> urls() {
+        return urls;
     }
 
     static class UrlHolder {

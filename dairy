@@ -21,10 +21,9 @@
     бо эти интенты такая дрочь, заебусь парсебл имплементить.
 
 ---------------------------------------- IN PROGRESS -----------------------------------------------
- *  Save results of search
+ *  Delete items
 ------------------------------------------- TO DO --------------------------------------------------
  *  Implement logic of search
- *  Delete items
  *  Differentiate skipped results from new searched
  *  Show results in the main screen
  *  Show results as the avatar pictures
@@ -35,6 +34,7 @@
  ** [mamba,topface,badoo] mark as favorite
  ** [mamba,topface,badoo] Login system
 -------------------------------------------- DONE --------------------------------------------------
+ *  Save results of search
  *  Design search actions
  *  Edit search item
  *  Save items between relaunching app

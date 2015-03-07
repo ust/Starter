@@ -4,11 +4,12 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,9 +23,10 @@ import java.io.PrintWriter;
 
 public class MainActivity extends ListActivity {
 
-    public static final String TAG = "main_activity";
     private static final String FILE_NAME = "starter.dat";
-    SearchAdapter adapter;
+
+    private SearchAdapter adapter;
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,6 @@ public class MainActivity extends ListActivity {
         footer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "Entered footerView.OnClickListener.onClick()");
                 // launch add new activity
                 startActivityForResult(new Intent(MainActivity.this, AddNewActivity.class), RequestType.add.code);
             }
@@ -46,7 +47,6 @@ public class MainActivity extends ListActivity {
         // Attach the adapter to this ListActivity's ListView
         adapter = new SearchAdapter(this);
         setListAdapter(adapter);
-        Log.i(TAG, "Entered the onCreate() method");
     }
 
     @Override
@@ -55,6 +55,9 @@ public class MainActivity extends ListActivity {
         switch (RequestType.of(requestCode)) {
             case add:
                 switch (AddNewActivity.ResultType.of(resultCode)) {
+                    case cancel:
+                        ApplicationContext.clearItem();
+                        break;
                     case ok:
                         // if user submitted a new ToDoItem
                         // Create a new ToDoItem from the data Intent
@@ -67,8 +70,12 @@ public class MainActivity extends ListActivity {
                 break;
             case edit:
                 switch (AddNewActivity.ResultType.of(resultCode)) {
+                    case cancel:
+                        ApplicationContext.clearItem();
+                        break;
                     case ok:
                         adapter.set(ApplicationContext.item());
+                        ApplicationContext.clearItem();
                         break;
                 }
                 break;
@@ -88,8 +95,9 @@ public class MainActivity extends ListActivity {
              PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
                      fos)))) {
 
-            for (int i = 0; i < getListAdapter().getCount(); i++)
-                writer.println(((SearchItem) getListAdapter().getItem(i)).stringValue());
+            for (int i = 0; i < getListAdapter().getCount(); i++) {
+                writer.println(gson.toJson(getListAdapter().getItem(i)));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -107,8 +115,8 @@ public class MainActivity extends ListActivity {
     private void loadItems() {
         try (FileInputStream fis = openFileInput(FILE_NAME);
              BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
-            for (String id = reader.readLine(); id != null; id = reader.readLine())
-                adapter.add(new SearchItem(Long.parseLong(id), reader.readLine(), Byte.parseByte(reader.readLine())));
+            for (String line = reader.readLine(); line != null; line = reader.readLine())
+                adapter.add(gson.fromJson(line, SearchItem.class));
         } catch (IOException e) {
             e.printStackTrace();
         }

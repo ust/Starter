@@ -21,17 +21,22 @@ public class SearchItem {
     private Byte age;
     private List<Url> urls = new CopyOnWriteArrayList<>();
 
+    public SearchItem(Long id, String name, Byte age) {
+        this(id, name, age, null);
+    }
+
+    public SearchItem(Long id, String name, Byte age, List<Url> urls) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.urls.addAll(urls);
+    }
+
     public static SearchItem from(Intent intent) {
         Long id = (Long) intent.getSerializableExtra(ID);
         String name = intent.getStringExtra(NAME);
         Byte age = (Byte) intent.getSerializableExtra(AGE);
         return id != null ? new SearchItem(id, name, age) : null;
-    }
-
-    public SearchItem(Long id, String name, Byte age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
     }
 
     public Long id() {

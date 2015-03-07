@@ -15,4 +15,7 @@ public class ApplicationContext {
     public static void item(SearchItem item) {
         ApplicationContext.item = item;
     }
+    public static void clearItem() {
+        item = null;
+    }
 }

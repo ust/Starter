@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 
 public class AddNewActivity extends ListActivity {
@@ -23,7 +24,6 @@ public class AddNewActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
-        final SearchItem item = ApplicationContext.item();
         tvName = (TextView) findViewById(R.id.etName);
         tvAge = (TextView) findViewById(R.id.etAge);
         findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {
@@ -41,13 +41,19 @@ public class AddNewActivity extends ListActivity {
         findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApplicationContext.item(new SearchItem(id(), name(), age()));
+                ApplicationContext.item(new SearchItem(id(), name(), age(), urls()));
                 setResult(ResultType.ok.code);
                 finish();
             }
         });
         adapter = new UrlAdapter(this);
         setListAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final SearchItem item = ApplicationContext.item();
         if (item != null) {
             id = item.id();
             tvName.setText(item.name());
@@ -66,16 +72,20 @@ public class AddNewActivity extends ListActivity {
         }
     }
 
-    private Byte age() {
-        return Byte.parseByte(tvAge.getText().toString());
+    private Long id() {
+        return id != null ? id : System.currentTimeMillis();
     }
 
     private String name() {
         return tvName.getText().toString();
     }
 
-    private Long id() {
-        return id != null ? id : System.currentTimeMillis();
+    private Byte age() {
+        return Byte.parseByte(tvAge.getText().toString());
+    }
+
+    private List<Url> urls() {
+        return adapter.urls();
     }
 
     @Override
