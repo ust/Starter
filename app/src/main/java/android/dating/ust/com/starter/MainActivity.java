@@ -51,35 +51,28 @@ public class MainActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(TAG, "Entered onActivityResult()");
         // Check result code and request code
         switch (RequestType.of(requestCode)) {
             case add:
                 switch (AddNewActivity.ResultType.of(resultCode)) {
                     case ok:
                         // if user submitted a new ToDoItem
-                        addSearchItem(data);
+                        // Create a new ToDoItem from the data Intent
+                        // and then add it to the adapter
+                        SearchItem item = ApplicationContext.item();
+                        if (item != null) adapter.add(item);
+                        ApplicationContext.item(null);
                         break;
                 }
                 break;
             case edit:
                 switch (AddNewActivity.ResultType.of(resultCode)) {
                     case ok:
-                        editSearchItem(data);
+                        adapter.set(ApplicationContext.item());
                         break;
                 }
                 break;
         }
-    }
-
-    private void editSearchItem(Intent data) {
-        adapter.set(SearchItem.from(data));
-    }
-
-    private void addSearchItem(Intent data) {
-        // Create a new ToDoItem from the data Intent
-        // and then add it to the adapter
-        adapter.add(SearchItem.from(data));
     }
 
     @Override

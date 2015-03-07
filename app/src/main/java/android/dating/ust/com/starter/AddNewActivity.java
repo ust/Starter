@@ -1,7 +1,6 @@
 package android.dating.ust.com.starter;
 
 import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Menu;
@@ -15,6 +14,7 @@ import java.net.URL;
 
 public class AddNewActivity extends ListActivity {
 
+    private Long id;
     private TextView tvName;
     private TextView tvAge;
     private UrlAdapter adapter;
@@ -23,7 +23,7 @@ public class AddNewActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
-        final SearchItem item = SearchItem.from(getIntent());
+        final SearchItem item = ApplicationContext.item();
         tvName = (TextView) findViewById(R.id.etName);
         tvAge = (TextView) findViewById(R.id.etAge);
         findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {
@@ -41,14 +41,15 @@ public class AddNewActivity extends ListActivity {
         findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(ResultType.ok.code, //
-                        new SearchItem(item != null ? item.id() : id(), name(), age()).putExtras(new Intent()));
+                ApplicationContext.item(new SearchItem(id(), name(), age()));
+                setResult(ResultType.ok.code);
                 finish();
             }
         });
         adapter = new UrlAdapter(this);
         setListAdapter(adapter);
         if (item != null) {
+            id = item.id();
             tvName.setText(item.name());
             tvAge.setText(item.age().toString());
             adapter.addAll(item.urls());
@@ -74,7 +75,7 @@ public class AddNewActivity extends ListActivity {
     }
 
     private Long id() {
-        return System.currentTimeMillis();
+        return id != null ? id : System.currentTimeMillis();
     }
 
     @Override

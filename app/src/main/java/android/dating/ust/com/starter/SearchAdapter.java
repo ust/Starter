@@ -61,8 +61,9 @@ public class SearchAdapter extends BaseAdapter {
         View.OnClickListener editor = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ApplicationContext.item(item);
                 ((MainActivity) context).startActivityForResult(
-                        item.putExtras(new Intent(context, AddNewActivity.class)),
+                        new Intent(context, AddNewActivity.class),
                         MainActivity.RequestType.edit.code);
             }
         };
@@ -73,17 +74,6 @@ public class SearchAdapter extends BaseAdapter {
         // Return the View you just created
         return convertView;
 
-    }
-
-    static class ItemHolder {
-        TextView tvName;
-        TextView tvAge;
-
-        public ItemHolder(View view) {
-            this.tvName = (TextView) view.findViewById(R.id.tvName);
-            this.tvAge = (TextView) view.findViewById(R.id.tvAge);
-            view.setTag(this);
-        }
     }
 
     public void add(SearchItem searchItem) {
@@ -102,6 +92,17 @@ public class SearchAdapter extends BaseAdapter {
             items.set(old, item);
         else items.add(item);
         notifyDataSetChanged();
+    }
+
+    static class ItemHolder {
+        TextView tvName;
+        TextView tvAge;
+
+        public ItemHolder(View view) {
+            this.tvName = (TextView) view.findViewById(R.id.tvName);
+            this.tvAge = (TextView) view.findViewById(R.id.tvAge);
+            view.setTag(this);
+        }
     }
 
 }
