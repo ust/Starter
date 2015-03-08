@@ -55,21 +55,8 @@ public class SearchItem {
         return urls;
     }
 
-    public void setUrls(List<Url> urls) {
-        this.urls = urls;
-    }
-
-    public boolean addUrl(Url url) {
-        return urls.add(url);
-    }
-
     public Intent putExtras(Intent intent) {
         return intent.putExtra(ID, id).putExtra(NAME, name).putExtra(AGE, age);
-    }
-
-    public String stringValue() {
-        String _ = System.getProperty("line.separator");
-        return id + _ + name + _ + age;
     }
 
     @Override

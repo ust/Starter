@@ -21,9 +21,8 @@
     бо эти интенты такая дрочь, заебусь парсебл имплементить.
 
 ---------------------------------------- IN PROGRESS -----------------------------------------------
- *  Delete items
-------------------------------------------- TO DO --------------------------------------------------
  *  Implement logic of search
+------------------------------------------- TO DO --------------------------------------------------
  *  Differentiate skipped results from new searched
  *  Show results in the main screen
  *  Show results as the avatar pictures
@@ -34,6 +33,7 @@
  ** [mamba,topface,badoo] mark as favorite
  ** [mamba,topface,badoo] Login system
 -------------------------------------------- DONE --------------------------------------------------
+ *  Delete items
  *  Save results of search
  *  Design search actions
  *  Edit search item

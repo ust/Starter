@@ -9,5 +9,9 @@
     <string name="okBtn">OK</string>
     <string name="backBtn"><![CDATA[< back]]></string>
     <string name="search">SEARCH</string>
+    <string name="share"><![CDATA[>]]></string>
+    <string name="remove">x</string>
+    <string name="add_new">+ add new item</string>
+    <string name="link_example">http://host/profile_link</string>
 
 </resources>

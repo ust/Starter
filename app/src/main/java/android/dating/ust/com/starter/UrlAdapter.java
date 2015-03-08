@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class UrlAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         UrlHolder holder;
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,7 +49,26 @@ public class UrlAdapter extends BaseAdapter {
         } else holder = (UrlHolder) convertView.getTag();
         Url url = urls.get(position);
         holder.tvUrl.setText(url.account().toString());
+        holder.btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remove(position);
+            }
+        });
         return convertView;
+    }
+
+    private Url remove(int position) {
+        Url removal = urls.remove(position);
+        if (removal != null) notifyDataSetChanged();
+        return removal;
+    }
+
+
+    private boolean remove(Url url) {
+        boolean removed = urls.remove(url);
+        if (removed) notifyDataSetChanged();
+        return removed;
     }
 
     public boolean addAll(List<Url> urls) {
@@ -69,9 +89,11 @@ public class UrlAdapter extends BaseAdapter {
 
     static class UrlHolder {
         TextView tvUrl;
+        Button btnRemove;
 
         public UrlHolder(View view) {
             this.tvUrl = (TextView) view.findViewById(R.id.tvUrl);
+            this.btnRemove = (Button) view.findViewById(R.id.btnRemove);
             view.setTag(this);
         }
     }
