@@ -29,7 +29,7 @@ public class SearchItem {
         this.id = id;
         this.name = name;
         this.age = age;
-        this.urls.addAll(urls);
+        if (urls != null) this.urls.addAll(urls);
     }
 
     public static SearchItem from(Intent intent) {

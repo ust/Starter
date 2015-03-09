@@ -16,9 +16,11 @@ public class Engine {
     public interface SearchListener {
         boolean onFound(SearchItem item, Url url);
     }
-
-    private static final String host = "";
-    private static final String css_aim = "";
+    // plain:   https://badoo.com/en/dating/ukraine/kyiv-oblast/kiev/girls/page-2/age-23-27/
+    private static final String host = "https://badoo.com";
+    private static final String general_params = "/en/dating/ukraine/kyiv-oblast/kiev/girls";
+    private static final String custom_params = "/page-%d/age-%d-%d/";
+    private static final String css_aim = ".user-name";
     private static final int max_pages = 1000;
 
     private List<SearchItem> items;
@@ -42,10 +44,14 @@ public class Engine {
 
     private void goThrough() throws IOException {
         for (int page = 0; page < max_pages; page++)
-            for (Element element : Jsoup.connect(host + ageRange() + page).get().select(css_aim))
+            for (Element element : Jsoup.connect(host + general_params + customParams(page)).get().select(css_aim))
                 for (SearchItem item : items)
                     if (match(element, item))
                         callback.onFound(item, new Url(photo(element), account(element)));
+    }
+
+    private String customParams(int page) {
+        return String.format(custom_params, page, minAge, maxAge);
     }
 
     private boolean match(Element element, SearchItem item) {
@@ -54,11 +60,15 @@ public class Engine {
 
     private URL account(Element element) {
         try {
-            return new URL(element.attr("href"));
+            return new URL(extractUrl(element));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private String extractUrl(Element element) {
+        return element.attr("href").replaceAll("\\?.*", "");
     }
 
     private URL photo(Element element) {

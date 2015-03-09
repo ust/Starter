@@ -19,6 +19,7 @@ public class EngineTest {
                 new Engine.SearchListener() {
                     @Override
                     public boolean onFound(SearchItem item, Url url) {
+                        System.out.println(url);
                         found[0] = item;
                         return false;
                     }
