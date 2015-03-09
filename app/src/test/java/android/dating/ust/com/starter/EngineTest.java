@@ -1,15 +1,18 @@
 package android.dating.ust.com.starter;
 
-import android.test.InstrumentationTestCase;
+import org.junit.Test;
 
 import java.util.Collections;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * core test-harness
  * Created by yaroslavpa on 3/8/2015.
  */
-public class EngineTest extends InstrumentationTestCase {
+public class EngineTest {
 
+    @Test
     public void test() {
         final SearchItem[] found = new SearchItem[1];
         new Engine(Collections.singletonList(new SearchItem(System.currentTimeMillis(), "Анна", (byte) 23)),
