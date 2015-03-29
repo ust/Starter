@@ -1,6 +1,7 @@
 package android.dating.ust.com.starter;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -16,10 +17,13 @@ import java.util.List;
 public class Engine {
 
 
+
     public interface SearchListener {
         boolean onFound(SearchItem item, Url url);
     }
 
+    public static final String user_agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
+    public static final String referrer = "http://www.google.com";
     // plain:   https://badoo.com/en/dating/ukraine/kyiv-oblast/kiev/girls/page-2/age-23-27/
     private static final String host = "https://badoo.com";
     private static final String general_params = "/en/dating/ukraine/kyiv-oblast/kiev/girls";
@@ -33,6 +37,7 @@ public class Engine {
     private SearchListener callback;
     private int minAge = 0;
     private int maxAge = 0;
+    private volatile boolean interrupted = false;
 
     public Engine(List<SearchItem> items, SearchListener callback) {
         this.items = items;
@@ -45,15 +50,20 @@ public class Engine {
 
     public void go() {
         try {
+            interrupted = false;
             goThrough();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
+    public void interrupt() {
+        interrupted = true;
+    }
+
     private void goThrough() throws IOException, InterruptedException {
         for (int age = minAge; age <= maxAge; age++)
-            for (int page = 0; page < pagesCount(age); page++)
+            for (int page = 0; !interrupted && page < pagesCount(age); page++)
                 for (Element element : page(age, page))
                     for (SearchItem item : items)
                         if (match(element, item))
@@ -62,7 +72,7 @@ public class Engine {
 
     private int pagesCount(int age) throws IOException, InterruptedException {
         Thread.sleep(300L);
-        return extractPagesCount(Jsoup.connect(host + general_params + customParams(age, 1)).get().select(".pagination-info"));
+        return extractPagesCount(getDocument(age, 1).select(".pagination-info"));
     }
 
     private int extractPagesCount(Elements select) {
@@ -70,7 +80,12 @@ public class Engine {
     }
 
     private Elements page(int age, int page) throws IOException {
-        return Jsoup.connect(host + general_params + customParams(age, page)).get().select(css_aim);
+        return getDocument(age, page).select(css_aim);
+    }
+
+    private Document getDocument(int age, int page) throws IOException {
+        return Jsoup.connect(host + general_params + customParams(age, page))
+                .userAgent(user_agent).referrer(referrer).ignoreContentType(true).get();
     }
 
     private String customParams(int age, int page) {

@@ -24,14 +24,23 @@
     Паралельно пытался накатать юнит тестик для движка, ипать это гемор джиЮнит4 включить(
 16. Включил джиЮнит, нужно свитчить варианты сборки.. не знаю, на сколько это хорошее решение.
     запустился парсер, теперь его чуть допилить и можно пробовать пихнуть в телефон. Чуть допилил.
-
+    И заебался, тошнит уже
+17. Двигло прилипить не сложно, вот тольк встал вопрос как его в фоне запусить. Привет корсера
+18. После долгих ленивых скитаний вокруг имплементации хэндлера, я всё таки всунул двигло!
+    как обычно вывод: бери и делай, долой перфекционизм, куча всего нового в том числе и прогресс
+    по результату. Теперь эта пижня ищет баб и сохраняет ссылочки. Надо бы сделать переход в
+    браузер.
 
 ---------------------------------------- IN PROGRESS -----------------------------------------------
- *  Implement logic of search
+ *  Share link to browser
 ------------------------------------------- TO DO --------------------------------------------------
+ *  Make pause/resume mechanism
+ ** [mamba,topface,badoo] implement db of the whole site, history
  *  Differentiate skipped results from new searched
- *  Show results in the main screen
  *  Show results as the avatar pictures
+ ** [badoo] Provide deep search function w/ extended information within profile for popular names
+ *  Share search items from GoogleKeep
+ *  Show results in the main screen
  ** [mamba] mark accounts in plain search view
  ** [mamba,topface,badoo] notify when favorites appeared online
  ** [topface, badoo] silent search for newcomers
@@ -39,6 +48,7 @@
  ** [mamba,topface,badoo] mark as favorite
  ** [mamba,topface,badoo] Login system
 -------------------------------------------- DONE --------------------------------------------------
+ ** Implement logic of search (market touchdown)
  *  Delete items
  *  Save results of search
  *  Design search actions
