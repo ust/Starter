@@ -31,7 +31,6 @@ public class Engine {
     private static final String css_aim = ".user-card";
     private static final String redundant_pagination_info = " women found";
     private static final String redundant_param = "\\?.*";
-    private static final int max_pages = 1000;
 
     private List<SearchItem> items;
     private SearchListener callback;

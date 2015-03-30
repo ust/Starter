@@ -1,6 +1,8 @@
 package android.dating.ust.com.starter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +57,12 @@ public class UrlAdapter extends BaseAdapter {
                 remove(position);
             }
         });
+        holder.btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getItem(position).account().toString())));
+            }
+        });
         return convertView;
     }
 
@@ -90,10 +98,12 @@ public class UrlAdapter extends BaseAdapter {
     static class UrlHolder {
         TextView tvUrl;
         Button btnRemove;
+        Button btnShare;
 
         public UrlHolder(View view) {
             this.tvUrl = (TextView) view.findViewById(R.id.tvUrl);
             this.btnRemove = (Button) view.findViewById(R.id.btnRemove);
+            this.btnShare = (Button) view.findViewById(R.id.btnShare);
             view.setTag(this);
         }
     }

@@ -29,11 +29,14 @@
 18. После долгих ленивых скитаний вокруг имплементации хэндлера, я всё таки всунул двигло!
     как обычно вывод: бери и делай, долой перфекционизм, куча всего нового в том числе и прогресс
     по результату. Теперь эта пижня ищет баб и сохраняет ссылочки. Надо бы сделать переход в
-    браузер.
+    браузер. Сделал, вылетает убогая мобильная версия. как бы его подхачить в сам баду закидывать.
 
 ---------------------------------------- IN PROGRESS -----------------------------------------------
- *  Share link to browser
+ * Show any photo from link
 ------------------------------------------- TO DO --------------------------------------------------
+ *  Share link to badoo app
+ #  Move through back-stack multiplies links in editor
+ *  Long press on url to copy into clipboard
  *  Make pause/resume mechanism
  ** [mamba,topface,badoo] implement db of the whole site, history
  *  Differentiate skipped results from new searched
@@ -48,6 +51,7 @@
  ** [mamba,topface,badoo] mark as favorite
  ** [mamba,topface,badoo] Login system
 -------------------------------------------- DONE --------------------------------------------------
+ *  Share link to browser
  ** Implement logic of search (market touchdown)
  *  Delete items
  *  Save results of search

@@ -15,7 +15,7 @@ public class EngineTest {
     @Test
     public void test() {
         final SearchItem[] found = new SearchItem[1];
-        new Engine(Collections.singletonList(new SearchItem(System.currentTimeMillis(), "Юлия", (byte) 25)),
+        new Engine(Collections.singletonList(new SearchItem(System.currentTimeMillis(), "Аня", (byte) 25)),
                 new Engine.SearchListener() {
                     @Override
                     public boolean onFound(SearchItem item, Url url) {
